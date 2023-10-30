@@ -1,16 +1,18 @@
 <?php
 
-
+/**
+ * Clase que representa una oferta de viatge
+ */
 class Oferta
 {
     private $id;            // id de l'oferta
     private $continent;     // nom del continent
     private $pais;          // nom del pais (en el nostre cas es el pais)
     private $preu;          // preu de l'oferta
-    private $pathImatges;   // ruta de les imatges de l'oferta en el sistema de fitxers del servidor
+    private $pathImatges;   // ruta de les imatges de l'oferta en el sistema de fitxers del servidor. TODO: comprovar si s'ha de fer servir aquesta variable o no
     private $durada_dies;   // durada de dies de l'oferta
 
-    public function __construct($id, $continent, $pais, $preu, $pathImatges, $durada_dies)
+    public function __construct(int $id, string $continent, string $pais, float $preu, string $pathImatges, int $durada_dies)
     {
         $this->id = $id;
         $this->continent = $continent;
@@ -20,46 +22,49 @@ class Oferta
         $this->durada_dies = $durada_dies;
     }
 
-    public function getContinent()
+    public function getContinent(): string
     {
         return $this->continent;
     }
 
-    public function getPais()
+    public function getPais(): string
     {
         return $this->pais;
     }
 
-    public function getPreu()
+    public function getPreu(): float
     {
         return $this->preu;
     }
 
-    public function getPathImatges()
+    public function getPathImatges(): string
     {
         return $this->pathImatges;
     }
 
-    public function getDuradaDies()
+    public function getDuradaDies(): int
     {
         return $this->durada_dies;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 }
 
-class reserva
+/**
+ * Clase que representa una reserva de viatge, la qual conte una oferta
+ */
+class Reserva
 {
-    private $oferta;    // oferta a la que es fa la reserva. 
-    private $nom;
-    private $telefon;
-    private $quantitat_persones;
-    private $descompte;
+    private $oferta;                // oferta a la que es fa la reserva. 
+    private $nom;                   // nom del client
+    private $telefon;               // telefon dle client
+    private $quantitat_persones;    // quantitat de persones de la reserva
+    private $descompte;             // la reserva te un desompte aplicat o no
 
-    public function __construct(Oferta $oferta, string $nom, $telefon, $quantitat_persones, $descompte)
+    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, bool $descompte)
     {
         $this->oferta = $oferta;
         $this->nom = $nom;
@@ -68,27 +73,27 @@ class reserva
         $this->descompte = $descompte;
     }
 
-    public function getOferta()
+    public function getOferta(): Oferta
     {
         return $this->oferta;
     }
 
-    public function getNom()
+    public function getNom(): string
     {
         return $this->nom;
     }
 
-    public function getTelefon()
+    public function getTelefon(): string
     {
         return $this->telefon;
     }
 
-    public function getQuantitatPersones()
+    public function getQuantitatPersones(): int
     {
         return $this->quantitat_persones;
     }
 
-    public function getDescompte()
+    public function getDescompte(): bool
     {
         return $this->descompte;
     }
@@ -202,7 +207,11 @@ function obtenerOfertas()
     }
 }
 
-
+/**
+ * Funció que retorna un array d'objectes oferta. En cas de no tenir ofertes retorna un array buit.
+ * @return array
+ * @throws PDOException
+ */
 function obtenerObjetoOfertas(): array
 {
     $connect = conect();
@@ -214,23 +223,27 @@ function obtenerObjetoOfertas(): array
         $statement = $connect->prepare($sql);
         $statement->execute();
 
+        // en cas de no tenir ofertes retornem un array buid
+        if ($statement->rowCount() < 1) {
+            return array();
+        }
+
         while ($fila = $statement->fetch()) {
             $ofertaId = $fila['id'];
             $ofertas[$ofertaId] = new Oferta($ofertaId, $fila['Continent'], $fila['Pais'], $fila['Preu'], $fila['Ruta Imatges'], $fila['Durada']);
         }
+
         return $ofertas;
-        // $statement->fetchAll();
-        // // creem una llista d'objectes oferta fent servir cada fila de la consulta
-        // $ofertas = array();
-        // foreach ($statement as $row) {
-        //     $ofertas[] = new oferta($row['Pais'], $row['Preu'], $row['Ruta Imatges'], $row['Durada']);
-        // }
-        // return $ofertas;
     } catch (PDOEXception $e) {
         echo "Error: " . $e->getMessage();
     }
 }
 
+/**
+ * Funció que retorna un array d'objectes reserva. En cas de no tenir reserves retorna un array buit.
+ * @return array
+ * @throws PDOException
+ */
 function obtenerObjetoReservas(): array
 {
     $connect = conect();
@@ -253,7 +266,7 @@ function obtenerObjetoReservas(): array
         // llegim els resultats de les reserves i creem un array de reserves
         while ($fila = $statement->fetch()) {
             $oferta = $ofertes[$fila['Oferta']];
-            $reservas[] = new reserva($oferta, $fila['Nom'], $fila['Telefon'], $fila['Persones'], $fila['Descompte']);
+            $reservas[] = new Reserva($oferta, $fila['Nom'], $fila['Telefon'], $fila['Persones'], $fila['Descompte']);
         }
 
         return $reservas;
