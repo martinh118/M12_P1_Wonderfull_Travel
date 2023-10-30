@@ -89,6 +89,34 @@ function selecPais(){
 
 }
 
+function selecImagenPais(){
+    let pais = document.getElementById("pais").value;
+
+    const paises={
+        China: '../source/optimizadas/asia/china/china_peq.webp',
+        Rusia: '../source/optimizadas/asia/rusia/rusia_peq.webp',
+        India: '../source/optimizadas/asia/india/india_peq.webp',
+        España: '../source/optimizadas/europa/spain/spain_peq.webp',
+        Holanda: '../source/optimizadas/europa/holand/holand_peq.webp',
+        Italia: '../source/optimizadas/europa/italia/italia_peq.webp',
+        Kenia: '../source/optimizadas/africa/kenia/kenia_peq.webp',
+        Nigeria: '../source/optimizadas/africa/nigeria/nigeria_peq.webp',
+        'Sudán': '../source/optimizadas/africa/sudan/sudan_peq.webp',
+        Canada: '../source/optimizadas/america_norte/canada/canada_peq.webp',
+        'Estados Unidos': '../source/optimizadas/america_norte/estados_unidos/estados_unidos_peq.webp',
+        Mexico: '../source/optimizadas/america_norte/mexico/mexico_peq.webp',
+        Brazil: '../source/optimizadas/america_sur/brazil/brazil_peq.webp',
+        Argentina: '../source/optimizadas/america_sur/argentina/argentina_peq.webp',
+        'Perú': '../source/optimizadas/america_sur/peru/peru_peq.webp',
+        Australia: '../source/optimizadas/oceania/australia/australia_peq.webp',
+        Fiji: '../source/optimizadas/oceania/fiji/fiji_peq.webp',
+        'Nueva Zelanda': '../source/optimizadas/oceania/nueva_zelanda/nueva_zelanda_peq.webp'
+    }
+
+    document.getElementById("imagen").src = paises[pais] || "";
+    
+}
+
 
 
 /************************************************
@@ -99,11 +127,8 @@ function clock() {
 	document.getElementById('data').innerHTML = rellotge(new Date());
 }
 
-function init() {
-	clock();
-	setInterval(clock, 1000);
-}
-
-init();
-
-document.getElementById("continent").addEventListener("change", selecPais);
+setInterval(clock, 1000);
+document.getElementById("continent").addEventListener("change", function(){
+    selecPais();
+    selecImagenPais();});
+document.getElementById("pais").addEventListener("change", selecImagenPais);
