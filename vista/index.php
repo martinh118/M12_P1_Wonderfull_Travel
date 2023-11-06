@@ -24,7 +24,7 @@
             <h3>Wonderfull Land</h3>
         </div>
         <div class="row justify-content-center mt-2">
-                <div id="data"></div>
+            <div id="data"></div>
         </div>
         <form action="#" class="mt-4">
             <div class="row">
@@ -78,6 +78,71 @@
                 </div>
             </div>
         </form>
+        <div class="container pt-5"><!--  contenidor de reserves -->
+            <div class="row">
+                <div class="col-sm mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body position-relative pb-0">
+                            <ul class="list-unstyled">
+                                <li>01-12-2020</li>
+                                <li>India</li>
+                                <li>123.456.789</li>
+                                <li>3 persones</li>
+                                <li>4680€</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                        </div>
+                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                    </div>
+                </div>
+                <div class="col-sm mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body position-relative pb-0">
+                            <ul class="list-unstyled">
+                                <li>01-12-2020</li>
+                                <li>India</li>
+                                <li>123.456.789</li>
+                                <li>3 persones</li>
+                                <li>4680€</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                        </div>
+                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                    </div>
+                </div>
+                <div class="col-sm mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body position-relative pb-0">
+                            <ul class="list-unstyled">
+                                <li>01-12-2020</li>
+                                <li>India</li>
+                                <li>123.456.789</li>
+                                <li>3 persones</li>
+                                <li>4680€</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                        </div>
+                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                    </div>
+                </div>
+                <div class="col-sm mb-5">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body position-relative pb-0">
+                            <ul class="list-unstyled">
+                                <li>01-12-2020</li>
+                                <li>India</li>
+                                <li>123.456.789</li>
+                                <li>3 persones</li>
+                                <li>4680€</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                        </div>
+                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+
 </html>
