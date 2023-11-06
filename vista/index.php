@@ -26,6 +26,10 @@
         <div class="row justify-content-center mt-2">
             <div id="data"></div>
         </div>
+        <div class="row justify-content-center mt-2">
+            <img id="imagen" src='../source/optimizadas/asia/china/china_peq.webp' alt="">
+        </div>
+
         <form action="#" class="mt-4">
             <div class="row">
                 <div class="col d-flex">
