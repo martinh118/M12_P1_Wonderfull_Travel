@@ -1,10 +1,12 @@
 <?php
+include_once("sql.php");
 
 /**
  * Clase que representa una oferta de viatge
  */
-class Oferta
+class Oferta implements JsonSerializable
 {
+
     private $id;            // id de l'oferta
     private $continent;     // nom del continent
     private $pais;          // nom del pais (en el nostre cas es el pais)
@@ -20,6 +22,18 @@ class Oferta
         $this->preu = $preu;
         $this->pathImatges = $pathImatges;
         $this->durada_dies = $durada_dies;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->id,
+            'continent' => $this->continent,
+            'pais' => $this->pais,
+            'preu' => $this->preu,
+            'pathImatges' => $this->pathImatges,
+            'durada_dies' => $this->durada_dies,
+        ];
     }
 
     public static function fromId(int $id)
@@ -60,8 +74,6 @@ class Oferta
 
     private static function getOfertaFromID(int $id)
     {
-
-        include_once("sql.php");
         $connect = connect();
         try {
             $statement = $connect->prepare('SELECT c.nom AS "Continent",
@@ -94,5 +106,33 @@ class Oferta
             return null;
         }
         return null;
+    }
+
+    public static function getOfertes(): array
+    {
+        $connect = connect();
+        try {
+            $sql = 'SELECT o.id, c.nom AS "Continent", p.nom AS "Pais", o.preu AS "Preu", o.imatges AS "Ruta Imatges", o.durada_dies AS "Durada"
+                FROM wonderfull_travel.pais p
+                RIGHT JOIN wonderfull_travel.continent c ON p.continent_id  = c.id
+                INNER JOIN wonderfull_travel.ofertes o ON p.id = o.pais_id;';
+            $statement = $connect->prepare($sql);
+            $statement->execute();
+
+            // en cas de no tenir ofertes retornem un array buid
+            if ($statement->rowCount() < 1) {
+                return array();
+            }
+
+            while ($fila = $statement->fetch()) {
+                $ofertaId = $fila['id'];
+                $ofertas[$ofertaId] = new Oferta($ofertaId, $fila['Continent'], $fila['Pais'], $fila['Preu'], $fila['Ruta Imatges'], $fila['Durada']);
+            }
+
+            return $ofertas;
+        } catch (PDOEXception $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        return array();
     }
 }
