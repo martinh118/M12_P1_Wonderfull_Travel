@@ -85,21 +85,26 @@
         </form>
         <div class="container pt-5"><!--  contenidor de reserves -->
             <div class="row">
-                <div class="col-sm mb-5">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body position-relative pb-0">
-                            <ul class="list-unstyled">
-                                <li>01-12-2020</li>
-                                <li>India</li>
-                                <li>123.456.789</li>
-                                <li>3 persones</li>
-                                <li>4680€</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                <?php
+                foreach ($reserves as $reserva) { ?>
+                    <div class="col-sm mb-5">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body position-relative pb-0">
+                                <ul class="list-unstyled">
+                                    <li>11-11-2023</li>
+                                    <!-- TODO: afegir data en la base de dades 😣 -->
+                                    <li><?= $reserva->getOferta()->getPais() ?></li>
+                                    <li><?= $reserva->getTelefon() ?></li>
+                                    <li><?= $reserva->getQuantitatPersones() ?></li>
+                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() . " €" ?></li>
+                                </ul>
+                                <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                            </div>
+                            <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                         </div>
-                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                     </div>
-                </div>
+                <?php }; ?>
+
                 <div class="col-sm mb-5">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body position-relative pb-0">

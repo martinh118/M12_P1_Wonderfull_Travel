@@ -1,5 +1,5 @@
 <?php
-include_once("sql.php");
+require_once("sql.php");
 
 /**
  * Clase que representa una oferta de viatge

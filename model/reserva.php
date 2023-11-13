@@ -1,5 +1,5 @@
 <?php
-
+require_once("sql.php");
 /**
  * Clase que representa una reserva de viatge, la qual conte una oferta
  */
@@ -67,8 +67,28 @@ class Reserva implements JsonSerializable
 
     public static function getReserves(): array
     {
-        // TODO: afegir codi per llegir les reserves.
-        return array();
+        $connect = connect();
+        $sql = 'SELECT r.client_nom AS "Nom",
+                    r.client_telefon AS "Telefon",
+                    r.quantitat_persones AS "Persones",
+                    r.descompte AS "Descompte",
+                    r.oferta_id AS "Oferta"
+                FROM wonderfull_travel.reserva r;';
+        $statement = $connect->prepare($sql);
+        $statement->execute();
+
+        // en cas de no tenir ofertes retornem un array buid
+        if ($statement->rowCount() < 1) {
+            return array();
+        }
+
+        $reserves = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $reservesInstancies = array();
+        foreach ($reserves as $reserva) {
+            $oferta = Oferta::fromId($reserva["Oferta"]);
+            $reservesInstancies[] = new Reserva($oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Descompte"]);
+        }
+        return $reservesInstancies;
     }
 
     // Funcions que interactuen amb la base de dades
@@ -81,7 +101,6 @@ class Reserva implements JsonSerializable
         $quantitatPersones = $this->getQuantitatPersones();
         $ofertaId = $this->oferta->getId();
 
-        include_once("sql.php");
         $connect = connect();
         try {
             $statement = $connect->prepare(" INSERT INTO `wonderfull_travel`.`reserva` (`oferta_id`, `descompte`, `client_nom`, `client_telefon`, `quantitat_persones`) 
