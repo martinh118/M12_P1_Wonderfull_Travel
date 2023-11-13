@@ -81,6 +81,7 @@
                     <input type="text" value="0,00€" size="5" disabled />
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
         </form>
         <div class="container pt-5"><!--  contenidor de reserves -->
             <div class="row">
