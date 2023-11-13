@@ -40,6 +40,7 @@ FROM wonderfull_travel.pais p
 SELECT r.client_nom AS "Nom",
     r.client_telefon AS "Telefon",
     r.quantitat_persones AS "Persones",
+    r.data_inici AS "Data Inici",
     r.descompte AS "Descompte",
     r.oferta_id AS "Oferta"
 FROM wonderfull_travel.reserva r;
