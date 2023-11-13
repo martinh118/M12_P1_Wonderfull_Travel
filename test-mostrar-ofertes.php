@@ -11,7 +11,7 @@
     <h1>Ofertes</h1>
     <ul>
         <?php
-        include_once("../model/model.php");
+        include_once("./model/model.php");
         $ofertes = obtenerObjetoOfertas();
         foreach ($ofertes as $oferta) {
             echo "<li>

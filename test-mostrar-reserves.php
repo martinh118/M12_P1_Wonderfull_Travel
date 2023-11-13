@@ -11,7 +11,7 @@
     <h1>Reserves</h1>
     <ul>
         <?php
-        include_once("../model/model.php");
+        include_once("./model/model.php");
         $reserves = obtenerObjetoReservas();
         foreach ($reserves as $reserva) {
             echo '<pre>';
