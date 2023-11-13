@@ -3,7 +3,7 @@
 /**
  * Clase que representa una reserva de viatge, la qual conte una oferta
  */
-class Reserva
+class Reserva implements JsonSerializable
 {
     private $oferta; // oferta a la que es fa la reserva.
     private $nom; // nom del client
@@ -18,6 +18,17 @@ class Reserva
         $this->telefon = $telefon;
         $this->quantitat_persones = $quantitat_persones;
         $this->descompte = $descompte;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'oferta' => $this->oferta,
+            'nom' => $this->nom,
+            'telefon' => $this->telefon,
+            'quantitat_persones' => $this->quantitat_persones,
+            'descompte' => $this->descompte,
+        ];
     }
 
     public function getOferta(): Oferta

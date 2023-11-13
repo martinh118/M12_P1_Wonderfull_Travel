@@ -11,9 +11,10 @@
     <h1>Ofertes</h1>
     <ul>
         <?php
-        include_once("./model/model.php");
-        $ofertes = obtenerObjetoOfertas();
+        include_once("./model/oferta.php");
+        $ofertes = Oferta::getOfertes();
         foreach ($ofertes as $oferta) {
+            break;
             echo "<li>
                 <ul>
                     <li>Continent: " . $oferta->getContinent() . "</li>
@@ -26,6 +27,18 @@
         }
         ?>
     </ul>
+
+    <div>
+        <?php
+        echo (json_encode($ofertes));
+        // for ($i = 1; $i < count($ofertes); $i++) {
+        // echo (json_encode($ofertes[$i]) . "<br>");
+        // var_dump($ofertes[$i]);
+        // }
+
+        // var_dump($ofertes);
+        ?>
+    </div>
 </body>
 
 </html>
