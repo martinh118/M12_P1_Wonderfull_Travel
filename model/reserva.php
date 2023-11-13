@@ -1,22 +1,27 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 require_once("sql.php");
 /**
  * Clase que representa una reserva de viatge, la qual conte una oferta
  */
 class Reserva implements JsonSerializable
 {
-    private $oferta; // oferta a la que es fa la reserva.
-    private $nom; // nom del client
-    private $telefon; // telefon dle client
-    private $quantitat_persones; // quantitat de persones de la reserva
-    private $descompte; // la reserva te un desompte aplicat o no
+    private $oferta;                // oferta a la que es fa la reserva.
+    private $nom;                   // nom del client
+    private $telefon;               // telefon dle client
+    private $quantitat_persones;    // quantitat de persones de la reserva
+    private $descompte;             // la reserva te un desompte aplicat o no
+    private $data_inici;            // data d'inici de la reserva
 
-    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, bool $descompte)
+    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $data_inici, bool $descompte)
     {
         $this->oferta = $oferta;
         $this->nom = $nom;
         $this->telefon = $telefon;
         $this->quantitat_persones = $quantitat_persones;
+        $this->data_inici = $data_inici;
         $this->descompte = $descompte;
     }
 
@@ -65,6 +70,22 @@ class Reserva implements JsonSerializable
         }
     }
 
+    /**
+     * Retorna un string de la data amb el format "YYYY-MM-DD"
+     */
+    public function getDataInici(): string
+    {
+        return $this->data_inici;
+    }
+
+    /**
+     * retorna un string de la data amb el format "DD/MM/YYYY"
+     */
+    public function getDataIniciFormatada(): string
+    {
+        return date("d/m/Y", strtotime($this->data_inici));
+    }
+
     public static function getReserves(): array
     {
         $connect = connect();
@@ -72,12 +93,13 @@ class Reserva implements JsonSerializable
                     r.client_telefon AS "Telefon",
                     r.quantitat_persones AS "Persones",
                     r.descompte AS "Descompte",
-                    r.oferta_id AS "Oferta"
+                    r.oferta_id AS "Oferta",
+                    r.data_inici AS "Data Inici"
                 FROM wonderfull_travel.reserva r;';
         $statement = $connect->prepare($sql);
         $statement->execute();
 
-        // en cas de no tenir ofertes retornem un array buid
+        // en cas de no tenir ofertes retornem un array buit
         if ($statement->rowCount() < 1) {
             return array();
         }
@@ -86,7 +108,9 @@ class Reserva implements JsonSerializable
         $reservesInstancies = array();
         foreach ($reserves as $reserva) {
             $oferta = Oferta::fromId($reserva["Oferta"]);
-            $reservesInstancies[] = new Reserva($oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Descompte"]);
+            echo ($reserva["Data Inici"]);
+
+            $reservesInstancies[] = new Reserva($oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"]);
         }
         return $reservesInstancies;
     }
@@ -95,21 +119,23 @@ class Reserva implements JsonSerializable
     public function storeReserva(): bool
     {
 
-        $descompte = $this->getDescompteBit();
+        $ofertaId = $this->oferta->getId();
         $nomClient = $this->getNom();
         $telefonClient = $this->getTelefon();
+        $descompte = $this->getDescompteBit();
         $quantitatPersones = $this->getQuantitatPersones();
-        $ofertaId = $this->oferta->getId();
+        $dataInici = $this->getDataInici();
 
         $connect = connect();
         try {
-            $statement = $connect->prepare(" INSERT INTO `wonderfull_travel`.`reserva` (`oferta_id`, `descompte`, `client_nom`, `client_telefon`, `quantitat_persones`) 
-                                                VALUES (:ofertaId, :descompte, :nomClient, :telefonClient, :quantitatPersones);");
+            $statement = $connect->prepare(" INSERT INTO `wonderfull_travel`.`reserva` (`oferta_id`, `descompte`, `client_nom`, `client_telefon`, `quantitat_persones`, `data_inici`) 
+                                                VALUES (:ofertaId, :descompte, :nomClient, :telefonClient, :quantitatPersones, :dataInici);");
 
             $statement->bindParam(':ofertaId', $ofertaId);
             $statement->bindParam(':nomClient', $nomClient);
             $statement->bindParam(':telefonClient', $telefonClient);
             $statement->bindParam(':quantitatPersones', $quantitatPersones);
+            $statement->bindParam(':dataInici', $dataInici);
             // tipus de parametre INT (perque es binary)
             $statement->bindParam(':descompte', $descompte, PDO::PARAM_INT);
 
