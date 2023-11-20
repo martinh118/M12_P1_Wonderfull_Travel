@@ -72,7 +72,11 @@ class ControladorReserves
 
     public static function eliminarReserva()
     {
-        $id = $_POST["id"];
+        if (empty($_POST["submit"])) {
+            return;
+        }
+
+        $id = $_POST["submit"];
         Reserva::deleteReserva($id);
     }
 

@@ -98,7 +98,6 @@
                     // mostrem la targeta amb les dades de la reserva i inserim la imatge fent servir el path 
                 ?>
                     <div class="col-sm mb-5">
-                        <input type="hidden" name="id" value="<?= $reserva->getId() ?>">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body position-relative pb-0">
                                 <ul class="list-unstyled">
@@ -108,7 +107,7 @@
                                     <li><?= $reserva->getQuantitatPersones() ?></li>
                                     <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " 20%" : "") ?></li>
                                 </ul>
-                                <button type="submit" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
+                                <button type="submit" name="submit" value="<?= $reserva->getId() ?>" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>
                             <img class="card-img-top pb-3" src="source/optimizadas/<?= $pathImatge ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                         </div>
