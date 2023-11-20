@@ -14,20 +14,26 @@ class ControladorReserves
         };
         $dadesReserva["oferta-id"] = $_POST["oferta-id"];
 
-        if (empty($_POST["nom"])) {
+
+        if (empty($_POST["data-viatge"])) {
+            $alertMessage = "Has d'introduir una data d'inici.";
+        };
+        $dadesReserva["dataInici"] = $_POST["data-viatge"];
+
+        if (empty($_POST["nom-client"])) {
             $alertMessage = "Has d'introduir un nom.";
         };
-        $dadesReserva["nom"] = $_POST["nom"];
+        $dadesReserva["nom"] = $_POST["nom-client"];
 
-        if (empty($_POST["telefon"])) {
+        if (empty($_POST["telefon-client"])) {
             $alertMessage = "Has d'introduir un telefon.";
         };
-        $dadesReserva["telefon"] = $_POST["telefon"];
+        $dadesReserva["telefon"] = $_POST["telefon-client"];
 
-        if (empty($_POST["quantitat_persones"])) {
+        if (empty($_POST["persones-client"])) {
             $alertMessage = "Has d'introduir una quantitat de persones.";
         };
-        $dadesReserva["quantitat_persones"] = $_POST["quantitat_persones"];
+        $dadesReserva["quantitat_persones"] = $_POST["persones-client"];
 
         if (empty($_POST["descompte"])) {
             $dadesReserva["descompte"] = false;
@@ -36,9 +42,14 @@ class ControladorReserves
         };
 
         $oferta = Oferta::fromId($dadesReserva["oferta-id"]);
+        if ($oferta == null) {
+            $alertMessage = "S'ha produit un error, torna-ho a intentar. Si l'error persisteix, contacta amb un administrador.";
+            return;
+        }
 
-        $reserva = new Reserva($oferta, $dadesReserva["nom"], $dadesReserva["telefon"], $dadesReserva["quantitat_persones"], $dadesReserva["descompte"]);
+        $reserva = new Reserva($oferta, $dadesReserva["nom"], $dadesReserva["telefon"], $dadesReserva["quantitat_persones"], $dadesReserva["dataInici"], $dadesReserva["descompte"]);
         $reserva->storeReserva();
+        return;
     }
 
     public static function eliminarReserva()

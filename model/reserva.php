@@ -16,7 +16,7 @@ class Reserva implements JsonSerializable
     private $descompte;             // la reserva te un desompte aplicat o no
     private $dataInici;            // data d'inici de la reserva
 
-    public function __construct(int $id, Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $dataInici, bool $descompte)
+    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $dataInici, bool $descompte = false, int $id = -1)
     {
         $this->id = $id;
         $this->oferta = $oferta;
@@ -118,7 +118,7 @@ class Reserva implements JsonSerializable
         foreach ($reserves as $reserva) {
             $oferta = Oferta::fromId($reserva["Oferta"]);
 
-            $reservesInstancies[] = new Reserva($reserva["id"], $oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"]);
+            $reservesInstancies[] = new Reserva($oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"], $reserva["id"]);
         }
         return $reservesInstancies;
     }
@@ -133,6 +133,7 @@ class Reserva implements JsonSerializable
         $descompte = $this->getDescompteBit();
         $quantitatPersones = $this->getQuantitatPersones();
         $dataInici = $this->getDataInici();
+        echo "Data: " . $dataInici . "<br>";
 
         $connect = connect();
         try {

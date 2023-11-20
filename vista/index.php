@@ -29,7 +29,8 @@
             <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
         </div>
 
-        <form action="insert" class="mt-4">
+        <form action="insert" method="post" class="mt-4">
+            <input type="hidden" name="oferta-id" id="oferta-id" value="-1">
             <div class="row">
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="data-viatge">Data:</label>
@@ -139,6 +140,8 @@
 
             let precioOfer = oferta.preu;
             let newPrecio = 0;
+
+
             numPersonas = parseFloat(numPersonas);
 
             if (numPersonas != "") {
@@ -155,6 +158,9 @@
             newPrecio = formatoPrecio().format(newPrecio);
             console.log(newPrecio);
             precioInput.innerHTML = newPrecio;
+
+            document.getElementById("oferta-id").value = oferta.id;
+
 
         }
 
@@ -177,6 +183,8 @@
         document.getElementById("descompte").addEventListener("change", aplicarPrecio);
         document.getElementById("persones-client").addEventListener("change", aplicarPrecio);
         document.getElementById("pais").addEventListener("change", aplicarPrecio);
+
+        aplicarPrecio();
     </script>
 </body>
 
