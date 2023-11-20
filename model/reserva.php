@@ -8,6 +8,7 @@ require_once("sql.php");
  */
 class Reserva implements JsonSerializable
 {
+    private $id;                     // id de la reserva
     private $oferta;                // oferta a la que es fa la reserva.
     private $nom;                   // nom del client
     private $telefon;               // telefon dle client
@@ -15,8 +16,9 @@ class Reserva implements JsonSerializable
     private $descompte;             // la reserva te un desompte aplicat o no
     private $dataInici;            // data d'inici de la reserva
 
-    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $dataInici, bool $descompte)
+    public function __construct(int $id, Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $dataInici, bool $descompte)
     {
+        $this->id = $id;
         $this->oferta = $oferta;
         $this->nom = $nom;
         $this->telefon = $telefon;
@@ -70,6 +72,11 @@ class Reserva implements JsonSerializable
         }
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
     /**
      * Retorna un string de la data amb el format "YYYY-MM-DD"
      */
@@ -89,7 +96,9 @@ class Reserva implements JsonSerializable
     public static function getReserves(): array
     {
         $connect = connect();
-        $sql = 'SELECT r.client_nom AS "Nom",
+        $sql = 'SELECT
+                    r.id AS "id",
+                    r.client_nom AS "Nom",
                     r.client_telefon AS "Telefon",
                     r.quantitat_persones AS "Persones",
                     r.descompte AS "Descompte",
@@ -110,7 +119,7 @@ class Reserva implements JsonSerializable
             $oferta = Oferta::fromId($reserva["Oferta"]);
             echo ($reserva["Data Inici"]);
 
-            $reservesInstancies[] = new Reserva($oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"]);
+            $reservesInstancies[] = new Reserva($reserva["id"], $oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"]);
         }
         return $reservesInstancies;
     }

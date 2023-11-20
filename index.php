@@ -6,12 +6,19 @@ include_once("./controlador/reserves.php");
 
 // comprovem si la sol·licitut es POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_POST["action"] == "delete") {
+    // comprovem si la ruta de la peticio es /delete
+    // acabada la accio, redireccionem a l'arrel
+    if ($_SERVER["REQUEST_URI"] == "/delete") {
         ControladorReserves::eliminarReserva();
-        die();
+        header("Location: /");
     }
-    ControladorReserves::inserirReserva();
-    die();
+
+    // comprovem si la ruta de la peticio es /insert
+    // acabada la accio, redireccionem a l'arrel
+    if ($_SERVER["REQUEST_URI"] == "/insert") {
+        ControladorReserves::inserirReserva();
+        header("Location: /");
+    }
 }
 
 // si no es POST, mostrem la web normal
