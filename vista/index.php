@@ -30,7 +30,7 @@
             <img id="imagen" src='../source/optimizadas/asia/china/china_peq.webp' alt="">
         </div>
 
-        <form action="#" class="mt-4">
+        <form action="insert" class="mt-4">
             <div class="row">
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="data-viatge">Data:</label>
@@ -84,7 +84,7 @@
             <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
         </form>
         <div class="container pt-5"><!--  contenidor de reserves -->
-            <div class="row">
+            <form action="delete" method="post" class="row">
                 <?php
                 foreach ($reserves as $reserva) {
                     // guardem el nom del pais
@@ -94,6 +94,7 @@
                     // mostrem la targeta amb les dades de la reserva i inserim la imatge fent servir el path 
                 ?>
                     <div class="col-sm mb-5">
+                        <input type="hidden" name="id" value="<?= $reserva->getId() ?>">
                         <div class="card" style="width: 18rem;">
                             <div class="card-body position-relative pb-0">
                                 <ul class="list-unstyled">
@@ -101,61 +102,15 @@
                                     <li><?= $reserva->getOferta()->getPais() ?></li>
                                     <li><?= $reserva->getTelefon() ?></li>
                                     <li><?= $reserva->getQuantitatPersones() ?></li>
-                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() . " €" ?></li>
+                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " 20%" : "") ?></li>
                                 </ul>
-                                <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
+                                <button type="submit" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>
                             <img class="card-img-top pb-3" src="../source/optimizadas/<?= $pathImatge ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                         </div>
                     </div>
                 <?php }; ?>
-
-                <div class="col-sm mb-5">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body position-relative pb-0">
-                            <ul class="list-unstyled">
-                                <li>01-12-2020</li>
-                                <li>India</li>
-                                <li>123.456.789</li>
-                                <li>3 persones</li>
-                                <li>4680€</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
-                        </div>
-                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
-                    </div>
-                </div>
-                <div class="col-sm mb-5">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body position-relative pb-0">
-                            <ul class="list-unstyled">
-                                <li>01-12-2020</li>
-                                <li>India</li>
-                                <li>123.456.789</li>
-                                <li>3 persones</li>
-                                <li>4680€</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
-                        </div>
-                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
-                    </div>
-                </div>
-                <div class="col-sm mb-5">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body position-relative pb-0">
-                            <ul class="list-unstyled">
-                                <li>01-12-2020</li>
-                                <li>India</li>
-                                <li>123.456.789</li>
-                                <li>3 persones</li>
-                                <li>4680€</li>
-                            </ul>
-                            <a href="#" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</a>
-                        </div>
-                        <img class="card-img-top pb-3" src="../source/optimizadas/africa/kenia/kenia_peq.webp" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>
