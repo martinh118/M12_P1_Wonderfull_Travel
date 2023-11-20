@@ -75,7 +75,7 @@
             <div class="row mt-4 align-items-center">
                 <div class="col offset-4">
                     <label class="mr-auto w-5" for="lang">Descompte 20% </label>
-                    <input type="checkbox" class="" id="descompte">
+                    <input type="checkbox" class="" id="descompte" name="descompte">
                 </div>
                 <div class="col">
                     <div type="text" id="precioOferta" value="0,00€" size="5"> </div>
