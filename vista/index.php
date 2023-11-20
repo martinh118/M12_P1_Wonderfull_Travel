@@ -3,17 +3,17 @@
 
 <head>
 
-    <link rel="stylesheet" href="../estil/estil.css" type="text/css">
+    <link rel="stylesheet" href="estil/estil.css" type="text/css">
     <meta charset="UTF-8" />
     <title>Wonderfull Land</title>
     <!--BOOTSTRAP-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="../bootstrap/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" media="screen">
-    <script src="../bootstrap/popper.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="bootstrap/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="screen">
+    <script src="bootstrap/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
-    <script defer type="module" src="../controlador/index.js"></script>
+    <script defer type="module" src="controlador/index.js"></script>
 
 </head>
 
@@ -27,7 +27,7 @@
             <div id="data"></div>
         </div>
         <div class="row justify-content-center mt-2">
-            <img id="imagen" src='../source/optimizadas/asia/china/china_peq.webp' alt="">
+            <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
         </div>
 
         <form action="insert" class="mt-4">
@@ -69,16 +69,16 @@
                 </div>
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="persones-client">Persones</label>
-                    <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client">
+                    <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client" min="1" max="50" value="1">
                 </div>
             </div>
             <div class="row mt-4 align-items-center">
                 <div class="col offset-4">
                     <label class="mr-auto w-5" for="lang">Descompte 20% </label>
-                    <input type="checkbox" class="">
+                    <input type="checkbox" class="" id="descompte">
                 </div>
                 <div class="col">
-                    <input type="text" value="0,00€" size="5" disabled />
+                    <div type="text" id="precioOferta" value="0,00€" size="5"> </div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
@@ -106,13 +106,79 @@
                                 </ul>
                                 <button type="submit" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>
-                            <img class="card-img-top pb-3" src="../source/optimizadas/<?= $pathImatge ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                            <img class="card-img-top pb-3" src="source/optimizadas/<?= $pathImatge ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                         </div>
                     </div>
                 <?php }; ?>
             </form>
         </div>
     </div>
+
+
+    <?php
+    include_once("model/oferta.php");
+    $ofertes = Oferta::getOfertes();
+
+    ?>
+
+    <script type="text/javascript">
+        let ofertas = '<?php echo json_encode($ofertes); ?>';
+        ofertas = JSON.parse(ofertas);
+        let arrayOfertas = [];
+        for (let d in ofertas) {
+            arrayOfertas.push(ofertas[d]);
+        }
+
+        function aplicarPrecio() {
+            let precioInput = document.getElementById("precioOferta");
+            let descuento = document.getElementById("descompte");
+
+            let numPersonas = document.getElementById("persones-client").value;
+            let pais_usuario = document.getElementById("pais").value;
+
+            let oferta = getValue("pais", pais_usuario, arrayOfertas);
+
+            let precioOfer = oferta.preu;
+            let newPrecio = 0;
+            numPersonas = parseFloat(numPersonas);
+
+            if (numPersonas != "") {
+                newPrecio = (parseFloat(precioOfer) * numPersonas);
+            } else if (numPersonas != 0) {
+                newPrecio = (parseFloat(precioOfer) * numPersonas);
+            } else newPrecio = precioOfer;
+
+
+            if (descuento.checked) {
+                newPrecio = parseFloat(newPrecio) - ((parseFloat(newPrecio) * 20) / 100);
+            }
+
+            newPrecio = formatoPrecio().format(newPrecio);
+            console.log(newPrecio);
+            precioInput.innerHTML = newPrecio;
+
+        }
+
+        function getValue(key, valor, array) {
+            for (let p of array) {
+                if (p[key] == valor) {
+                    return p;
+                }
+            }
+        }
+
+        function formatoPrecio() {
+            let estil = {
+                style: "currency",
+                currency: "EUR"
+            };
+            return new Intl.NumberFormat('es-ES', estil);
+        }
+
+        document.getElementById("descompte").addEventListener("change", aplicarPrecio);
+        document.getElementById("persones-client").addEventListener("change", aplicarPrecio);
+        document.getElementById("pais").addEventListener("change", aplicarPrecio);
+    </script>
 </body>
 
 </html>
