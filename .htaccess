@@ -2,13 +2,14 @@
     RewriteEngine On
     RewriteBase /
 
-    # Prevents redirection for existing files and directories
+    # Evitar redireccio pels fitxers existents
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
 
-    # Redirect every request to index.php
-    RewriteRule ^index\.php$ - [L,NC]
+    # Redirigir totes les peticions HTML i PHP a /index.php
+    RewriteRule \.(html|php)$ /index.php [L]
 
-    # Redirect every other request to index.php
+    # Redirigir totes les peticions a /index.php
     RewriteRule ^ index.php [L]
+
 </IfModule>
