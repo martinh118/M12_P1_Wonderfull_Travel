@@ -41,6 +41,19 @@ class ControladorReserves
             $dadesReserva["descompte"] = true;
         };
 
+        // TODO: COMPROVAR SI LES DADES INTRODUIDES SON CORRECTES
+
+        // si hi ha error, mostrem l'alerta i sortim de la funcio
+        if (isset($alertMessage)) {
+            // guardem el missatge d'alerta i les dades introduides en la sessio
+            $_SESSION["dadesReserva"] = $dadesReserva;
+            $_SESSION["alertMessage"] = $alertMessage;
+
+            // redirigim a la vista
+            ControladorReserves::mostrarReserves();
+            return;
+        }
+
         $oferta = Oferta::fromId($dadesReserva["oferta-id"]);
         if ($oferta == null) {
             $alertMessage = "S'ha produit un error, torna-ho a intentar. Si l'error persisteix, contacta amb un administrador.";

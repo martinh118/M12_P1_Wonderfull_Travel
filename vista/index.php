@@ -17,7 +17,6 @@
 </head>
 
 <body>
-
     <div class="container ">
         <div class="row justify-content-center mt-5">
             <h3>Wonderfull Land</h3>
@@ -28,17 +27,16 @@
         <div class="row justify-content-center mt-2">
             <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
         </div>
-
         <form action="insert" method="post" class="mt-4">
             <input type="hidden" name="oferta-id" id="oferta-id" value="-1">
             <div class="row">
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="data-viatge">Data:</label>
-                    <input class="rounded form-control w-100" type="date" name="data-viatge" id="data-viatge">
+                    <input class="rounded form-control w-100" type="date" name="data-viatge" id="data-viatge" value="<?= isset($_SESSION["dadesReserva"]["dataInici"]) ? $_SESSION["dadesReserva"]["dataInici"] : "" ?>">
                 </div>
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="nom-client">Nom:</label>
-                    <input class="rounded form-control w-100" type="text" name="nom-client" id="nom-client">
+                    <input class="rounded form-control w-100" type="text" name="nom-client" id="nom-client" value="<?= isset($_SESSION["dadesReserva"]["nom"]) ? $_SESSION["dadesReserva"]["nom"] : "" ?>">
                 </div>
             </div>
             <div class="row mt-3">
@@ -55,7 +53,7 @@
                 </div>
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="telefon">Telefon: </label>
-                    <input class="rounded form-control w-100" type="text" name="telefon-client" id="telefon-client">
+                    <input class="rounded form-control w-100" type="text" name="telefon-client" id="telefon-client" value="<?= isset($_SESSION["dadesReserva"]["telefon"]) ? $_SESSION["dadesReserva"]["telefon"] : "" ?>">
                 </div>
             </div>
             <div class="row mt-3">
@@ -69,20 +67,32 @@
                 </div>
                 <div class="col d-flex">
                     <label class="mr-auto w-50" for="persones-client">Persones</label>
-                    <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client" min="1" max="50" value="1">
+                    <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client" min="1" max="50" value="<?= isset($_SESSION["dadesReserva"]["quantitat_persones"]) ? $_SESSION["dadesReserva"]["quantitat_persones"] : "1" ?>">
                 </div>
             </div>
             <div class="row mt-4 align-items-center">
                 <div class="col offset-4">
                     <label class="mr-auto w-5" for="lang">Descompte 20% </label>
-                    <input type="checkbox" class="" id="descompte" name="descompte">
+                    <input type="checkbox" class="" id="descompte" name="descompte" value="descompte" <?= isset($_SESSION["descompte"]) ? ($_SESSION["dadesReserva"]["descompte"] ?: "checked") : "" ?>>
                 </div>
                 <div class="col">
                     <div type="text" id="precioOferta" value="0,00€" size="5"> </div>
                 </div>
             </div>
+            <?php if (isset($_SESSION["alertMessage"])) { ?>
+                <div class="alert alert-danger mt-3" role="alert">
+                    <?php
+                    echo $_SESSION["alertMessage"];
+                    // una vegada mostrat el missatge, l'esborrem de la sessio
+                    unset($_SESSION["alertMessage"]);
+                    // esborrem tambe les dades introduides de la sessio
+                    unset($_SESSION["dadesReserva"]);
+                    ?>
+                </div>
+            <?php } ?>
             <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
         </form>
+
         <div class="container pt-5"><!--  contenidor de reserves -->
             <form action="delete" method="post" class="row">
                 <?php
@@ -141,6 +151,8 @@
             let precioOfer = oferta.preu;
             let newPrecio = 0;
 
+            document.getElementById("oferta-id").value = oferta.id;
+            console.log(oferta.id)
 
             numPersonas = parseFloat(numPersonas);
 
@@ -159,7 +171,6 @@
             console.log(newPrecio);
             precioInput.innerHTML = newPrecio;
 
-            document.getElementById("oferta-id").value = oferta.id;
 
 
         }
@@ -183,6 +194,7 @@
         document.getElementById("descompte").addEventListener("change", aplicarPrecio);
         document.getElementById("persones-client").addEventListener("change", aplicarPrecio);
         document.getElementById("pais").addEventListener("change", aplicarPrecio);
+        document.getElementById("continent").addEventListener("change", aplicarPrecio);
 
         aplicarPrecio();
     </script>
