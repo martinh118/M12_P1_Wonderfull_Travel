@@ -51,6 +51,11 @@ class ControladorReserves
 
             // redirigim a la vista
             ControladorReserves::mostrarReserves();
+
+            // una vegada mostrat el missatge, l'esborrem de la sessio
+            unset($_SESSION["alertMessage"]);
+            // esborrem tambe les dades introduides de la sessio
+            unset($_SESSION["dadesReserva"]);
             return;
         }
 

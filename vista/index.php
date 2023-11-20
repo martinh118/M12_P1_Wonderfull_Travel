@@ -81,13 +81,7 @@
             </div>
             <?php if (isset($_SESSION["alertMessage"])) { ?>
                 <div class="alert alert-danger mt-3" role="alert">
-                    <?php
-                    echo $_SESSION["alertMessage"];
-                    // una vegada mostrat el missatge, l'esborrem de la sessio
-                    unset($_SESSION["alertMessage"]);
-                    // esborrem tambe les dades introduides de la sessio
-                    unset($_SESSION["dadesReserva"]);
-                    ?>
+                    <?= $_SESSION["alertMessage"] ?>
                 </div>
             <?php } ?>
             <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
