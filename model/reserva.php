@@ -147,4 +147,25 @@ class Reserva implements JsonSerializable
         }
         return true;
     }
+
+    public static function deleteReserva(int $id): bool
+    {
+        $reservaId = $id;
+        $connect = connect();
+
+        try {
+            $statement = $connect->prepare("DELETE FROM `wonderfull_travel`.`reserva` WHERE (`id` = :reservaId);");
+            $statement->bindParam(':reservaId', $reservaId);
+            $statement->execute();
+
+            if ($statement->rowCount() < 1) {
+                return false;
+            };
+            return true;
+        } catch (PDOException $e) {
+            // mostrarem els errors
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
 }

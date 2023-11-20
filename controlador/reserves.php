@@ -41,6 +41,12 @@ class ControladorReserves
         $reserva->storeReserva();
     }
 
+    public static function eliminarReserva()
+    {
+        $id = $_POST["id"];
+        Reserva::deleteReserva($id);
+    }
+
     public static function mostrarReserves()
     {
         $reserves = Reserva::getReserves();

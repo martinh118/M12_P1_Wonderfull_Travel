@@ -6,6 +6,10 @@ include_once("./controlador/reserves.php");
 
 // comprovem si la sol·licitut es POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_POST["action"] == "delete") {
+        ControladorReserves::eliminarReserva();
+        die();
+    }
     ControladorReserves::inserirReserva();
     die();
 }
