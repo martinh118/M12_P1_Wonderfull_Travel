@@ -13,15 +13,15 @@ class Reserva implements JsonSerializable
     private $telefon;               // telefon dle client
     private $quantitat_persones;    // quantitat de persones de la reserva
     private $descompte;             // la reserva te un desompte aplicat o no
-    private $data_inici;            // data d'inici de la reserva
+    private $dataInici;            // data d'inici de la reserva
 
-    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $data_inici, bool $descompte)
+    public function __construct(Oferta $oferta, string $nom, string $telefon, int $quantitat_persones, string $dataInici, bool $descompte)
     {
         $this->oferta = $oferta;
         $this->nom = $nom;
         $this->telefon = $telefon;
         $this->quantitat_persones = $quantitat_persones;
-        $this->data_inici = $data_inici;
+        $this->dataInici = $dataInici;
         $this->descompte = $descompte;
     }
 
@@ -75,7 +75,7 @@ class Reserva implements JsonSerializable
      */
     public function getDataInici(): string
     {
-        return $this->data_inici;
+        return $this->dataInici;
     }
 
     /**
@@ -83,7 +83,7 @@ class Reserva implements JsonSerializable
      */
     public function getDataIniciFormatada(): string
     {
-        return date("d/m/Y", strtotime($this->data_inici));
+        return date("d/m/Y", strtotime($this->dataInici));
     }
 
     public static function getReserves(): array

@@ -12,16 +12,16 @@ class Oferta implements JsonSerializable
     private $pais;          // nom del pais (en el nostre cas es el pais)
     private $preu;          // preu de l'oferta
     private $pathImatges;   // ruta de les imatges de l'oferta en el sistema de fitxers del servidor. TODO: comprovar si s'ha de fer servir aquesta variable o no
-    private $durada_dies;   // durada de dies de l'oferta
+    private $duradaDies;   // durada de dies de l'oferta
 
-    public function __construct(int $id, string $continent, string $pais, float $preu, string $pathImatges, int $durada_dies)
+    public function __construct(int $id, string $continent, string $pais, float $preu, string $pathImatges, int $duradaDies)
     {
         $this->id = $id;
         $this->continent = $continent;
         $this->pais = $pais;
         $this->preu = $preu;
         $this->pathImatges = $pathImatges;
-        $this->durada_dies = $durada_dies;
+        $this->duradaDies = $duradaDies;
     }
 
     public function jsonSerialize(): mixed
@@ -32,47 +32,11 @@ class Oferta implements JsonSerializable
             'pais' => $this->pais,
             'preu' => $this->preu,
             'pathImatges' => $this->pathImatges,
-            'durada_dies' => $this->durada_dies,
+            'duradaDies' => $this->duradaDies,
         ];
     }
 
-    public static function fromId(int $id)
-    {
-        $inst = self::getOfertaFromID($id);
-        return $inst;
-    }
-
-    public function getContinent(): string
-    {
-        return $this->continent;
-    }
-
-    public function getPais(): string
-    {
-        return $this->pais;
-    }
-
-    public function getPreu(): float
-    {
-        return $this->preu;
-    }
-
-    public function getPathImatges(): string
-    {
-        return $this->pathImatges;
-    }
-
-    public function getDuradaDies(): int
-    {
-        return $this->durada_dies;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    private static function getOfertaFromID(int $id)
+    public static function fromId(int $id): Oferta | null
     {
         $connect = connect();
         try {
@@ -106,6 +70,36 @@ class Oferta implements JsonSerializable
             return null;
         }
         return null;
+    }
+
+    public function getContinent(): string
+    {
+        return $this->continent;
+    }
+
+    public function getPais(): string
+    {
+        return $this->pais;
+    }
+
+    public function getPreu(): float
+    {
+        return $this->preu;
+    }
+
+    public function getPathImatges(): string
+    {
+        return $this->pathImatges;
+    }
+
+    public function getDuradaDies(): int
+    {
+        return $this->duradaDies;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public static function getOfertes(): array
