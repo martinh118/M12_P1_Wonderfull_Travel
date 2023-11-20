@@ -117,7 +117,6 @@ class Reserva implements JsonSerializable
         $reservesInstancies = array();
         foreach ($reserves as $reserva) {
             $oferta = Oferta::fromId($reserva["Oferta"]);
-            echo ($reserva["Data Inici"]);
 
             $reservesInstancies[] = new Reserva($reserva["id"], $oferta, $reserva["Nom"], $reserva["Telefon"], $reserva["Persones"], $reserva["Data Inici"], $reserva["Descompte"]);
         }
