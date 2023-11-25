@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `wonderfull_travel`.`ofertes` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `pais_id` INT UNSIGNED NOT NULL,
   `preu` DECIMAL(5, 2) NOT NULL,
-  `imatges` VARCHAR(45) NOT NULL,
+  `imatges` VARCHAR(100) NOT NULL,
   `durada_dies` INT UNSIGNED NOT NULL,
   `valida` BIT(1) NULL DEFAULT 1,
   UNIQUE INDEX `id_pais_UNIQUE` (`pais_id` ASC),

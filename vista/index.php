@@ -109,7 +109,7 @@
                                 </ul>
                                 <button type="submit" name="submit" value="<?= $reserva->getId() ?>" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>
-                            <img class="card-img-top pb-3" src="source/optimizadas/<?= $pathImatge ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
+                            <img class="card-img-top pb-3" src="<?= $reserva->getOferta()->getPathImatges(); ?>" style="padding-left:1.25rem; padding-right:1.25rem" alt="Card image cap">
                         </div>
                     </div>
                 <?php }; ?>
