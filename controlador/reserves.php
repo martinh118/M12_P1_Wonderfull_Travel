@@ -9,7 +9,7 @@ class ControladorReserves
     public static function inserirReserva()
     {
         // comprovem si hi ha error amb algun camp introduit        
-        if (empty($_POST["oferta-id"])) {
+        if (empty($_POST["oferta-id"]) || $_POST["oferta-id"] == "-1") {
             $alertMessage = "S'ha produit un error, torna-ho a intentar. Si l'error persisteix, contacta amb un administrador.";
         };
         $dadesReserva["oferta-id"] = $_POST["oferta-id"];
@@ -64,7 +64,6 @@ class ControladorReserves
             $alertMessage = "S'ha produit un error, torna-ho a intentar. Si l'error persisteix, contacta amb un administrador.";
             return;
         }
-
         $reserva = new Reserva($oferta, $dadesReserva["nom"], $dadesReserva["telefon"], $dadesReserva["quantitat_persones"], $dadesReserva["dataInici"], $dadesReserva["descompte"]);
         $reserva->storeReserva();
         return;
