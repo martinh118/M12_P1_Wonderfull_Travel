@@ -43,7 +43,7 @@
         <div class="row justify-content-center mt-2">
             <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
         </div>
-        <form action="insert.php" method="post" class="mt-4">
+        <form action="insert" method="post" class="mt-4">
             <input type="hidden" name="oferta-id" id="oferta-id" value="-1">
             <div class="row">
                 <div class="col d-flex">
@@ -112,7 +112,7 @@
         <h3>Reserves</h3>
 
         <div class="container pt-5"><!--  contenidor de reserves -->
-            <form action="delete.php" method="post" class="row">
+            <form action="delete" method="post" class="row">
                 <?php
                 foreach ($reserves as $reserva) {
                     // guardem el nom del pais
