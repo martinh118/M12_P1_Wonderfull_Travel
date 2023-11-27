@@ -4,5 +4,4 @@ Proyecto 1 - Wonderfull Land (Marc J. Peral &amp; Martín H. Jaime)
 
 
 # Todo
-- Arreglar rutes imatges (PHP)
 - Comprovar validesa de dades de la nova reserva abans de guardar-la (PHP)
