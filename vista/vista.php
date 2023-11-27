@@ -163,6 +163,15 @@
                         </div>
                     </div>
                 <?php }; ?>
+                <?php if ($reserves == null) { ?>
+                    <div class="col-sm mb-5">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <p class="card-text">No hi ha reserves</p>
+                            </div>
+                        </div>
+                    </div>
+                <?php }; ?>
             </form>
         </div>
     </div>
