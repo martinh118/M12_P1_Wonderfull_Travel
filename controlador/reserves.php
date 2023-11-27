@@ -83,6 +83,6 @@ class ControladorReserves
     public static function mostrarReserves()
     {
         $reserves = Reserva::getReserves();
-        include_once("./vista/index.php");
+        include_once("./vista/vista.php");
     }
 }
