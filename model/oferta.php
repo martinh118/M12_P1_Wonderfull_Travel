@@ -46,9 +46,9 @@ class Oferta implements JsonSerializable
                                                 o.imatges AS "Ruta Imatges",
                                                 o.durada_dies AS "Durada",
                                                 o.valida AS "Activa"
-                                            FROM wonderfull_travel.pais p
-                                                RIGHT JOIN wonderfull_travel.continent c ON p.continent_id = c.id
-                                                INNER JOIN wonderfull_travel.ofertes o ON p.id = o.pais_id
+                                            FROM pais p
+                                                RIGHT JOIN continent c ON p.continent_id = c.id
+                                                INNER JOIN ofertes o ON p.id = o.pais_id
                                                 WHERE o.id = :id;');
             $statement->execute(
                 array(
@@ -107,9 +107,9 @@ class Oferta implements JsonSerializable
         $connect = connect();
         try {
             $sql = 'SELECT o.id, c.nom AS "Continent", p.nom AS "Pais", o.preu AS "Preu", o.imatges AS "Ruta Imatges", o.durada_dies AS "Durada"
-                FROM wonderfull_travel.pais p
-                RIGHT JOIN wonderfull_travel.continent c ON p.continent_id  = c.id
-                INNER JOIN wonderfull_travel.ofertes o ON p.id = o.pais_id;';
+                FROM pais p
+                RIGHT JOIN continent c ON p.continent_id  = c.id
+                INNER JOIN ofertes o ON p.id = o.pais_id;';
             $statement = $connect->prepare($sql);
             $statement->execute();
 
@@ -117,7 +117,6 @@ class Oferta implements JsonSerializable
             if ($statement->rowCount() < 1) {
                 return array();
             }
-
             while ($fila = $statement->fetch()) {
                 $ofertaId = $fila['id'];
                 $ofertas[$ofertaId] = new Oferta($ofertaId, $fila['Continent'], $fila['Pais'], $fila['Preu'], $fila['Ruta Imatges'], $fila['Durada']);
