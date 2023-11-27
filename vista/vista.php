@@ -7,26 +7,38 @@
     <title>Wonderfull Land</title>
     <!--BOOTSTRAP-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="bootstrap/jquery-3.5.1.min.js"></script>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="screen">
-    <script src="bootstrap/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="./bootstrap/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" media="screen">
+    <script src="./bootstrap/popper.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
-    <script defer type="module" src="controlador/index.js"></script>
+    <script defer type="module" src="./controlador/index.js"></script>
 
 </head>
 
 <body>
+    <?php
+    include_once("./model/oferta.php");
+    $ofertes = Oferta::getOfertes();
+
+    ?>
+
+    <script type="text/javascript">
+        let ofertas = '<?php echo json_encode($ofertes); ?>';
+        ofertas = JSON.parse(ofertas);
+        let arrayOfertas = [];
+        for (let d in ofertas) {
+            arrayOfertas.push(ofertas[d]);
+        }
+    </script>
+
+
     <div class="container ">
         <div class="row justify-content-center mt-5">
             <h3>Wonderfull Land</h3>
         </div>
         <div class="row justify-content-center mt-2">
-            <div id="data"><?php
-                            echo date("h:i:s A");
-                            echo "<br>";
-                            echo date("l d / m / Y");
-                            ?></div>
+            <div id="data"></div>
         </div>
         <div class="row justify-content-center mt-2">
             <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
@@ -74,6 +86,12 @@
                     <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client" min="1" max="50" value="<?= isset($_SESSION["dadesReserva"]["quantitat_persones"]) ? $_SESSION["dadesReserva"]["quantitat_persones"] : "1" ?>">
                 </div>
             </div>
+            <div class="row mt-4 ">
+                <div class="col">
+                    <div type="text" id="duradaDies" size="5"> Durada: <?php ?> dies</div>
+                </div>
+            </div>
+
             <div class="row mt-4 align-items-center">
                 <div class="col offset-4">
                     <label class="mr-auto w-5" for="lang">Descompte 20% </label>
@@ -90,6 +108,8 @@
             <?php } ?>
             <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
         </form>
+        <br>
+        <h3>Reserves</h3>
 
         <div class="container pt-5"><!--  contenidor de reserves -->
             <form action="delete" method="post" class="row">
@@ -122,18 +142,17 @@
     </div>
 
 
-    <?php
-    include_once("model/oferta.php");
-    $ofertes = Oferta::getOfertes();
 
-    ?>
 
     <script type="text/javascript">
-        let ofertas = '<?php echo json_encode($ofertes); ?>';
-        ofertas = JSON.parse(ofertas);
-        let arrayOfertas = [];
-        for (let d in ofertas) {
-            arrayOfertas.push(ofertas[d]);
+
+        function cambiarDias(){
+            let inputDias = document.getElementById("duradaDies");
+            let pais_usuario = document.getElementById("pais").value;
+
+            let oferta = getValue("pais", pais_usuario, arrayOfertas);
+
+            inputDias.innerHTML = "Durada: " + oferta.duradaDies + " dies";
         }
 
         function aplicarPrecio() {
@@ -190,9 +209,10 @@
 
         document.getElementById("descompte").addEventListener("change", aplicarPrecio);
         document.getElementById("persones-client").addEventListener("change", aplicarPrecio);
-        document.getElementById("pais").addEventListener("change", aplicarPrecio);
-        document.getElementById("continent").addEventListener("change", aplicarPrecio);
-
+        document.getElementById("pais").addEventListener("change", function(){aplicarPrecio(); cambiarDias();});
+        document.getElementById("continent").addEventListener("change", function(){aplicarPrecio(); cambiarDias();});
+        
+        cambiarDias();
         aplicarPrecio();
     </script>
 </body>
