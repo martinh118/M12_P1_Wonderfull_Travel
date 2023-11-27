@@ -120,7 +120,7 @@ class Reserva implements JsonSerializable
                     r.descompte AS "Descompte",
                     r.oferta_id AS "Oferta",
                     r.data_inici AS "Data Inici"
-                FROM wonderfull_travel.reserva r;';
+                FROM reserva r;';
         $statement = $connect->prepare($sql);
         $statement->execute();
 
@@ -149,11 +149,10 @@ class Reserva implements JsonSerializable
         $descompte = $this->getDescompteBit();
         $quantitatPersones = $this->getQuantitatPersones();
         $dataInici = $this->getDataInici();
-        echo "Data: " . $dataInici . "<br>";
 
         $connect = connect();
         try {
-            $statement = $connect->prepare(" INSERT INTO `wonderfull_travel`.`reserva` (`oferta_id`, `descompte`, `client_nom`, `client_telefon`, `quantitat_persones`, `data_inici`) 
+            $statement = $connect->prepare(" INSERT INTO reserva (oferta_id, descompte, client_nom, client_telefon, quantitat_persones, data_inici) 
                                                 VALUES (:ofertaId, :descompte, :nomClient, :telefonClient, :quantitatPersones, :dataInici);");
 
             $statement->bindParam(':ofertaId', $ofertaId);
@@ -179,8 +178,8 @@ class Reserva implements JsonSerializable
         $connect = connect();
 
         try {
-            $statement = $connect->prepare("DELETE FROM `wonderfull_travel`.`reserva` WHERE (`id` = :reservaId);");
-            $statement->bindParam(':reservaId', $reservaId);
+            $statement = $connect->prepare("DELETE FROM reserva WHERE (id = :reservaId);");
+            $statement->bindParam(":reservaId", $reservaId);
             $statement->execute();
 
             if ($statement->rowCount() < 1) {

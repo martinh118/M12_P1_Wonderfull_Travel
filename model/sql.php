@@ -2,8 +2,9 @@
 function connect()
 {
     try {
-        $connexio = new PDO('mysql:host=localhost;dbname=wonderfull_travel', 'root', '');
-        //echo "Connexio correcta!!" . "<br />";
+        // $connexio = new PDO('mysql:host=localhost;dbname=wonderfull_travel', 'root', '');
+        $connexio = new PDO('mysql:host=localhost;dbname=wonderfull-travel;charset=utf8', 'mywonderfu1e', 'RcPgB1d5');
+
         return $connexio;
     } catch (PDOException $e) { //
         // mostrarem els errors

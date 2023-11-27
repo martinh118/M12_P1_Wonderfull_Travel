@@ -145,8 +145,7 @@
 
 
     <script type="text/javascript">
-
-        function cambiarDias(){
+        function cambiarDias() {
             let inputDias = document.getElementById("duradaDies");
             let pais_usuario = document.getElementById("pais").value;
 
@@ -209,9 +208,15 @@
 
         document.getElementById("descompte").addEventListener("change", aplicarPrecio);
         document.getElementById("persones-client").addEventListener("change", aplicarPrecio);
-        document.getElementById("pais").addEventListener("change", function(){aplicarPrecio(); cambiarDias();});
-        document.getElementById("continent").addEventListener("change", function(){aplicarPrecio(); cambiarDias();});
-        
+        document.getElementById("pais").addEventListener("change", function() {
+            aplicarPrecio();
+            cambiarDias();
+        });
+        document.getElementById("continent").addEventListener("change", function() {
+            aplicarPrecio();
+            cambiarDias();
+        });
+
         cambiarDias();
         aplicarPrecio();
     </script>
