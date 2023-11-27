@@ -8,6 +8,7 @@ class ControladorReserves
 
     public static function inserirReserva()
     {
+        session_start();
         // comprovem si hi ha error amb algun camp introduit
 
         // comprovacio id oferta
@@ -61,14 +62,6 @@ class ControladorReserves
             // guardem el missatge d'alerta i les dades introduides en la sessio
             $_SESSION["dadesReserva"] = $dadesReserva;
             $_SESSION["alertMessage"] = $alertMessage;
-
-            // redirigim a la vista
-            ControladorReserves::mostrarReserves();
-
-            // una vegada mostrat el missatge, l'esborrem de la sessio
-            unset($_SESSION["alertMessage"]);
-            // esborrem tambe les dades introduides de la sessio
-            unset($_SESSION["dadesReserva"]);
             return;
         }
 
@@ -94,7 +87,13 @@ class ControladorReserves
 
     public static function mostrarReserves()
     {
+        session_start();
         $reserves = Reserva::getReserves();
         include_once("./vista/vista.php");
+
+        // una vegada mostrat el missatge, l'esborrem de la sessio
+        unset($_SESSION["alertMessage"]);
+        // esborrem tambe les dades introduides de la sessio
+        unset($_SESSION["dadesReserva"]);
     }
 }
