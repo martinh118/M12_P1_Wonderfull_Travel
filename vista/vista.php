@@ -71,18 +71,18 @@
             <input type="hidden" name="oferta-id" id="oferta-id" value="-1">
             <div class="row">
                 <div class="col d-flex">
-                    <label class="mr-auto w-50" for="data-viatge">Data:</label>
+                    <label class="mr-auto w-50" for="data-viatge">Fecha inicial:</label>
                     <input class="rounded form-control w-100" type="date" name="data-viatge" id="data-viatge" value="<?= isset($_SESSION["dadesReserva"]["dataInici"]) ? $_SESSION["dadesReserva"]["dataInici"] : "" ?>">
                 </div>
                 <div class="col d-flex">
-                    <label class="mr-auto w-50" for="nom-client">Nom:</label>
+                    <label class="mr-auto w-50" for="nom-client">Nombre:</label>
                     <input class="rounded form-control w-100" type="text" name="nom-client" id="nom-client" value="<?= isset($_SESSION["dadesReserva"]["nom"]) ? $_SESSION["dadesReserva"]["nom"] : "" ?>">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col d-flex form-group m-0">
-                    <label class="mr-auto w-50" for="lang">Continent: </label>
-                    <select class="roudned w-100 form-control" name="continent" id="continent">
+                    <label class="mr-auto w-50" for="lang">Continente: </label>
+                    <select class="rounded w-100 form-control" name="continent" id="continent">
                         <option>Asia</option>
                         <option>Europa</option>
                         <option>Africa</option>
@@ -92,33 +92,33 @@
                     </select>
                 </div>
                 <div class="col d-flex">
-                    <label class="mr-auto w-50" for="telefon">Telefon: </label>
+                    <label class="mr-auto w-50" for="telefon">Teléfono: </label>
                     <input class="rounded form-control w-100" type="text" name="telefon-client" id="telefon-client" value="<?= isset($_SESSION["dadesReserva"]["telefon"]) ? $_SESSION["dadesReserva"]["telefon"] : "" ?>">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col d-flex  form-group m-0">
-                    <label class="mr-auto w-50" for="lang">Pais: </label>
-                    <select class="roudned w-100 form-control" name="pais" id="pais">
+                    <label class="mr-auto w-50" for="lang">País: </label>
+                    <select class="rounded w-100 form-control" name="pais" id="pais">
                         <option>China</option>
                         <option>Rusia</option>
                         <option>India</option>
                     </select>
                 </div>
                 <div class="col d-flex">
-                    <label class="mr-auto w-50" for="persones-client">Persones</label>
+                    <label class="mr-auto w-50" for="persones-client">Personas</label>
                     <input class="rounded form-control w-100" type="number" name="persones-client" id="persones-client" min="1" max="50" value="<?= isset($_SESSION["dadesReserva"]["quantitat_persones"]) ? $_SESSION["dadesReserva"]["quantitat_persones"] : "1" ?>">
                 </div>
             </div>
             <div class="row mt-4 ">
                 <div class="col">
-                    <div type="text" id="duradaDies" size="5"> Durada: <?php ?> dies</div>
+                    <div type="text" id="duradaDies" size="5"> Duración: <?php ?> días</div>
                 </div>
             </div>
 
             <div class="row mt-4 align-items-center">
                 <div class="col offset-4">
-                    <label class="mr-auto w-5" for="lang">Descompte 20% </label>
+                    <label class="mr-auto w-5" for="lang">Descuento (20%) </label>
                     <input type="checkbox" class="" id="descompte" name="descompte" value="descompte" <?= isset($_SESSION["descompte"]) ? ($_SESSION["dadesReserva"]["descompte"] ?: "checked") : "" ?>>
                 </div>
                 <div class="col">
@@ -130,10 +130,10 @@
                     <?= $_SESSION["alertMessage"] ?>
                 </div>
             <?php } ?>
-            <button type="submit" class="btn btn-primary btn-block mt-3">Submit</button>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Reservar</button>
         </form>
         <br>
-        <h3>Reserves</h3>
+        <h3>Reservas</h3>
 
         <div class="container pt-5"><!--  contenidor de reserves -->
             <form action="delete" method="post" class="row">
@@ -149,11 +149,13 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body position-relative pb-0">
                                 <ul class="list-unstyled">
-                                    <li><?= $reserva->getDataIniciFormatada() ?> - <?= $reserva->getDataFiFormatada() ?></li>
-                                    <li><?= $reserva->getOferta()->getPais() ?></li>
-                                    <li><?= $reserva->getTelefon() ?></li>
-                                    <li><?= $reserva->getQuantitatPersones() ?></li>
-                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " (-20%)" : "") ?></li>
+                                    <li>Entrada: <?= $reserva->getDataIniciFormatada() ?></li>
+                                    <li>Salida: <?= $reserva->getDataFiFormatada() ?></li>
+                                    <li>Destino: <?= $reserva->getOferta()->getPais() ?></li>
+                                    <li>Nombre: <?= $reserva->getNom() ?></li>
+                                    <li>Teléfono: <?= $reserva->getTelefon() ?></li>
+                                    <li>Personas: <?= $reserva->getQuantitatPersones() ?> </li>
+                                    <li>Coste: <?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " (-20%)" : "") ?></li>
                                 </ul>
                                 <button type="submit" name="submit" value="<?= $reserva->getId() ?>" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>
@@ -175,7 +177,7 @@
 
             let oferta = getValue("pais", pais_usuario, arrayOfertas);
 
-            inputDias.innerHTML = "Durada: " + oferta.duradaDies + " dies";
+            inputDias.innerHTML = "Duración: " + oferta.duradaDies + " días";
         }
 
         function aplicarPrecio() {
