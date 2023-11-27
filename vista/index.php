@@ -22,7 +22,11 @@
             <h3>Wonderfull Land</h3>
         </div>
         <div class="row justify-content-center mt-2">
-            <div id="data"></div>
+            <div id="data"><?php
+                            echo date("h:i:s A");
+                            echo "<br>";
+                            echo date("l d / m / Y");
+                            ?></div>
         </div>
         <div class="row justify-content-center mt-2">
             <img id="imagen" src='source/optimizadas/asia/china/china_peq.webp' alt="">
