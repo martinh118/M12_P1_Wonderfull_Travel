@@ -1,13 +1,15 @@
 <?php
+// sql.php
+require_once './config.php';
+
 function connect()
 {
     try {
-        // $connexio = new PDO('mysql:host=localhost;dbname=wonderfull_travel', 'root', '');
-        $connexio = new PDO('mysql:host=localhost;dbname=wonderfull-travel;charset=utf8', 'mywonderfu1e', 'RcPgB1d5');
+        $connexio = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET, DB_USER, DB_PASSWORD);
 
         return $connexio;
-    } catch (PDOException $e) { //
-        // mostrarem els errors
+    } catch (PDOException $e) {
+        // Mostrar errores
         echo "Error: " . $e->getMessage();
     }
 }

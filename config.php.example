@@ -1,0 +1,8 @@
+<?php
+// config.php
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'wonderfull-travel');
+define('DB_CHARSET', 'utf8');
+define('DB_USER', 'tu_usuario');
+define('DB_PASSWORD', 'tu_contraseña');
