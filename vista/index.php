@@ -101,11 +101,11 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body position-relative pb-0">
                                 <ul class="list-unstyled">
-                                    <li><?= $reserva->getDataIniciFormatada() ?></li>
+                                    <li><?= $reserva->getDataIniciFormatada() ?> - <?= $reserva->getDataFiFormatada() ?></li>
                                     <li><?= $reserva->getOferta()->getPais() ?></li>
                                     <li><?= $reserva->getTelefon() ?></li>
                                     <li><?= $reserva->getQuantitatPersones() ?></li>
-                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " 20%" : "") ?></li>
+                                    <li><?= $reserva->getOferta()->getPreu() * $reserva->getQuantitatPersones() * ($reserva->getDescompteBit() ? .8 : 1) . " €" . ($reserva->getDescompteBit() ? " (-20%)" : "") ?></li>
                                 </ul>
                                 <button type="submit" name="submit" value="<?= $reserva->getId() ?>" class="btn btn-primary position-absolute" style="top:1.25rem; right:1.25rem;">🗑</button>
                             </div>

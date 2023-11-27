@@ -93,6 +93,22 @@ class Reserva implements JsonSerializable
         return date("d/m/Y", strtotime($this->dataInici));
     }
 
+    /**
+     * Retorna un string de la data amb el format "YYYY-MM-DD"
+     */
+    public function getDataFi(): string
+    {
+        return date("Y-m-d", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() . " days"));
+    }
+
+    /**
+     * retorna un string de la data amb el format "DD/MM/YYYY"
+     */
+    public function getDataFiFormatada(): string
+    {
+        return date("d/m/Y", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() . " days"));
+    }
+
     public static function getReserves(): array
     {
         $connect = connect();
