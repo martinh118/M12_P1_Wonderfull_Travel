@@ -98,7 +98,7 @@ class Reserva implements JsonSerializable
      */
     public function getDataFi(): string
     {
-        return date("Y-m-d", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() . " days"));
+        return date("Y-m-d", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() - 1 . " days"));
     }
 
     /**
@@ -106,7 +106,7 @@ class Reserva implements JsonSerializable
      */
     public function getDataFiFormatada(): string
     {
-        return date("d/m/Y", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() . " days"));
+        return date("d/m/Y", strtotime($this->dataInici . " + " . $this->oferta->getDuradaDies() - 1 . " days"));
     }
 
     public static function getReserves(): array
